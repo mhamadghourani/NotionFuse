@@ -37,15 +37,12 @@ body {
 
 .dashboard {
   display: grid;
-  grid-template-columns: 250px 1fr;   /* sidebar + main area */
-  grid-template-rows: 60px 1fr 50px;  /* navbar + content + footer */
+  grid-template-columns: 250px 1fr;   
+  grid-template-rows: 60px 1fr 50px;  
   min-height: 100vh;
 }
 
-/* Navbar */
 
-
-/* Content */
 .content {
   grid-row: 2 / 3;
   grid-column: 2 / 3;

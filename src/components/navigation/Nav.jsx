@@ -6,7 +6,7 @@ function Nav() {
     <main className={styles.navbar}>
         <div className={styles.inputcont}><input type="text" /></div> 
            <div className={styles.navprofile}>
-            <p>my name</p>
+            <p>HI, MY NAME</p>
            <div className={styles.navimgcont}></div>
         </div>
     </main>

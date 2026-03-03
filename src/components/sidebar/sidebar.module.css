@@ -1,13 +1,12 @@
 .sidebar{
   grid-row: 1 / 4; 
   grid-column: 1 / 2;
-  padding: 20px;
   background: rgba(46, 16, 101, 0.6); /* semi-transparent purple */
   backdrop-filter: blur(10px);         /* frosted effect */
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255,255,255,0.2);
-  /* color: white; */
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
 }
 .profile{
   display: flex;
@@ -16,16 +15,50 @@
   gap: 5px;
   font-size: x-large;
   margin-bottom: 50px;
+  background: var(--background);
+  height: 60px;
 }
 .profile h1{
    font-family: 'Anton', sans-serif;
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-style: italic;
-  color: #9554ff;
+  color: #fff;
 }
 .imgcont{
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  border: 3px solid #9554ff;
+  border: 3px solid #fff;
+}
+.nav ul{
+    font-size: 1rem;
+    padding-left: 20px;
+}
+.nav li{
+  padding: 6px 12px;
+  /* letter-spacing: 1px; */
+  font-style: italic;
+  cursor: pointer;
+  font-family: Poppins, Helvetica, sans-serif;
+  font-weight: 900;
+}
+.nav ul li:hover{
+    background: var(--background);
+  color: hsl(66, 100%, 53%);
+  border-radius: 5px 0 0 5px;
+  border-left: 4px solid hsl(66, 100%, 53%);
+}
+.footer{
+  margin-top: auto;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 5px;
+}
+.footerbtn{
+  background: rgba(46, 16, 101, 0.6);
+  padding: 5px 10px;
+  border-radius: 5px;
+  border-left: 4px solid hsl(66, 100%, 53%);
+  font-size: 1.2rem;
 }

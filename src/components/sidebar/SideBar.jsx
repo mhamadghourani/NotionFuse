@@ -15,6 +15,9 @@ function SideBar() {
           <li>Logout</li>
         </ul>
       </nav>
+      <div className={styles.footer}>
+        <div className={styles.footerbtn}>ADD SOMETHING LATER</div>
+      </div>
     </main>
     
   )
