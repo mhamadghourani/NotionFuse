@@ -1,0 +1,40 @@
+.navbar {
+  grid-row: 1 / 2;
+  grid-column: 2 / 3;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 0 20px;
+   background: rgba(46, 16, 101, 0.6);   /* semi-transparent purple */
+  backdrop-filter: blur(10px);          /* frosted glass */
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.5); /* neon glow */
+}
+.inputcont{
+     background: rgba(255, 255, 255, 0.1); /* light white overlay */
+    border-radius: 5px;
+    width: 500px;
+}
+.inputcont input{
+    outline: none;
+    background-color: transparent;
+    border: none;
+    padding: 3px;
+}
+.navimgcont{
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+.navprofile{
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-style: italic;
+    color: hsl(0, 0%, 85%);
+}

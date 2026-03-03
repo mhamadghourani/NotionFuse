@@ -1,26 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: linear-gradient(
+  135deg,
+  #4c1d95 0%,
+  #6d28d9 35%,
+  #3b82f6 70%,
+  #06b6d4 100%
+);
+  --foreground: hsl(0,0%,90%);
+  --card-color: rgba(255, 255, 255, 0.23);
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(8.9px);
+-webkit-backdrop-filter: blur(8.9px);
+border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 body {
+   margin: 0;
+  padding: 0;
+  height: 100vh;
+  overflow: hidden; 
   background: var(--background);
+  background-repeat: no-repeat;
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Anton', sans-serif;
+    
 }
+
+.dashboard {
+  display: grid;
+  grid-template-columns: 250px 1fr;   /* sidebar + main area */
+  grid-template-rows: 60px 1fr 50px;  /* navbar + content + footer */
+  min-height: 100vh;
+}
+
+/* Navbar */
+
+
+/* Content */
+.content {
+  grid-row: 2 / 3;
+  grid-column: 2 / 3;
+  padding: 20px;
+  /* background: linear-gradient(
+    135deg,
+    #4c1d95,
+    #6d28d9,
+    #3b82f6
+  ); */
+}
+
