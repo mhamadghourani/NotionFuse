@@ -7,6 +7,12 @@
 
 **Notion Fuse** is a full-stack SaaS application designed to streamline database management within the Notion ecosystem. By leveraging a robust **Spring Boot** backend and a **React** frontend, it allows users to perform complex data merging operations that go beyond native Notion capabilities.
 
+## 👥 Beta Testing & User Management
+I manage a dedicated Discord community for early adopters to handle onboarding, triage bug reports, and prioritize feature requests. Maintaining this direct line of communication allows for rapid iteration and ensures the development roadmap aligns with actual user needs.
+
+Early testers receive a 15% lifetime discount upon the Pro release.
+[💬 Join the Beta Discord Server Here](https://discord.gg/pvuJvFzwfW)
+
 ## 🛠 Tech Stack
 
 * **Backend:** Java, Spring Boot, Spring Security (JWT/PostgreSQL)
