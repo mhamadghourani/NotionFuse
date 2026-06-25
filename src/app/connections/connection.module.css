@@ -1,0 +1,9 @@
+.connection{
+    padding:20px;
+}
+.container {
+    border-radius: 20px;
+    background-color: #fff;
+    padding: 20px 30px;
+    box-shadow: var(--shadow-soft);
+}
