@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Notion Fuse
 
-## Getting Started
+*Seamlessly merge and manage your Notion databases with a specialized SaaS engine.*
+**🚀 [Live Demo: View on Vercel](https://notion-fuse.vercel.app/)**
 
-First, run the development server:
+## 🚀 Overview
 
+**Notion Fuse** is a full-stack SaaS application designed to streamline database management within the Notion ecosystem. By leveraging a robust **Spring Boot** backend and a **React** frontend, it allows users to perform complex data merging operations that go beyond native Notion capabilities.
+
+## 👥 Beta Testing & User Management
+I manage a dedicated Discord community for early adopters to handle onboarding, triage bug reports, and prioritize feature requests. Maintaining this direct line of communication allows for rapid iteration and ensures the development roadmap aligns with actual user needs.
+
+Early testers receive a 15% lifetime discount upon the Pro release.
+[💬 Join the Beta Discord Server Here](https://discord.gg/pvuJvFzwfW)
+
+## 🛠 Tech Stack
+
+* **Backend:** Java, Spring Boot, Spring Security (JWT/PostgreSQL)
+* **Frontend:** React, Vercel (Deployment)
+* **Integrations:** Notion API
+* **Infrastructure:** Render (Cloud Hosting)
+
+## 💡 Key Features
+
+* **Database Merging Engine:** Custom logic for merging Notion database records.
+* **Secure Authentication:** JWT-based security framework with PostgreSQL persistence.
+* **Scalable Architecture:** Modular Spring Boot security starter for future-proofing authentication flows.
+
+## ⚠️ Known Limitations
+
+Currently, Notion Fuse is optimized for **desktop use**.
+
+* **Responsive Design:** The UI is not yet fully responsive for mobile devices. Users may experience layout issues on smaller screens. 
+* *Future Roadmap:* Improving responsive design and mobile-first layout is a priority for upcoming releases.
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+Ensure you have Node.js installed on your machine.
+
+### Installation
+
+1. **Clone the repository:**
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/mhamadghourani/NotionFuse.git
 ```
+## Install dependencies:
+```bash
+npm install
+```
+## Run the development server:
+``` bash
+npm start
+```
+## 📜 License
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
