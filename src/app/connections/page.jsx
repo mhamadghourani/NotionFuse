@@ -11,6 +11,9 @@ export default function ConnectionsPage() {
   const [error, setError] = useState(null);
   const [isNotConnected, setIsNotConnected] = useState(false);
   const [notification, setNotification] = useState(null);
+  
+  // 🔥 NEW: Tracks if we've checked local storage yet
+  const [isAuthChecked, setIsAuthChecked] = useState(false); 
 
   const searchParams = useSearchParams();
 
@@ -46,7 +49,6 @@ export default function ConnectionsPage() {
         return;
       }
 
-      // 🔥 Added explicit checks for "failed to fetch databases" string permutations
       if (
         message.toLowerCase().includes('not connected') || 
         message.toLowerCase().includes('notion is not connected') ||
@@ -72,6 +74,9 @@ export default function ConnectionsPage() {
     } else {
       setLoading(false);
     }
+    
+    // 🔥 NEW: Mark the check as complete so the UI can render properly
+    setIsAuthChecked(true);
 
     const status = searchParams.get('status');
 
@@ -130,7 +135,6 @@ export default function ConnectionsPage() {
           </div>
         )}
 
-        {/* Global errors show up here ONLY if it's an unexpected network crash */}
         {error && (
           <div className="p-4 rounded-2xl font-medium border text-sm shadow-sm bg-rose-500/10 text-rose-400 border-rose-500/20">
             {error}
@@ -151,7 +155,7 @@ export default function ConnectionsPage() {
             <div className="flex gap-3 w-full sm:w-auto">
               <button
                 onClick={fetchDatabases}
-                disabled={loading}
+                disabled={loading || !isAuthChecked}
                 className="flex-1 sm:flex-initial px-5 py-3 text-xs font-bold text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-[#0B0E19] rounded-xl hover:bg-gray-200 dark:hover:bg-[#1D243C] transition-all flex items-center justify-center min-w-[120px]"
               >
                 {loading ? (
@@ -163,7 +167,7 @@ export default function ConnectionsPage() {
 
               <button
                 onClick={handleAddIntegration}
-                disabled={loading}
+                disabled={loading || !isAuthChecked}
                 className="flex-1 sm:flex-initial bg-blue-600 text-white px-5 py-3 rounded-xl text-xs font-bold shadow-lg shadow-blue-600/20 hover:bg-blue-500 transition-all flex items-center justify-center gap-2"
               >
                 <Plus size={14} />
@@ -174,7 +178,8 @@ export default function ConnectionsPage() {
         </section>
 
         <section className="bg-white dark:bg-[#15192D] rounded-3xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
-          {loading && databases.length === 0 ? (
+          {/* 🔥 NEW: Added !isAuthChecked to prevent layout flash on reload */}
+          {(loading || !isAuthChecked) && databases.length === 0 ? (
             <div className="p-20 text-center text-sm text-gray-400 animate-pulse">
               Syncing your workspace data...
             </div>
@@ -236,16 +241,6 @@ export default function ConnectionsPage() {
                             Open
                             <ExternalLink size={12} />
                           </a>
-
-                          {/* <button
-                            onClick={() =>
-                              (window.location.href = `/automations/new?source=${db.id}`)
-                            }
-                            className="bg-blue-600/10 text-blue-500 px-4 py-2 rounded-lg text-[11px] font-bold uppercase hover:bg-blue-600 hover:text-white transition-all flex items-center gap-2"
-                          >
-                            Merge
-                            <ArrowRight size={12} />
-                          </button> */}
                         </div>
                       </td>
                     </tr>
