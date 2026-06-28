@@ -60,11 +60,11 @@ export const authService = {
     return parseResponse(res);
   },
 
-  resendEmail: async (email) => {
+ resendEmail: async (email) => {
     const res = await fetch(`${BASE_URL}/api/v1/auth/resend-verification`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(email),
+      body: JSON.stringify({ email }), // Wrap it in an object matching ForgotPasswordRequest
     });
     return parseResponse(res);
   },
