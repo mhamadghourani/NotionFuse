@@ -20,54 +20,69 @@ export default function AuthPage() {
   const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
 
-useEffect(() => {
-  const token = localStorage.getItem("token");
+    if (!token) return;
 
-  if (!token) return;
-
-  authService
-    .validateToken()
-    .then(() => {
-      router.push("/dashboard");
-    })
-    .catch(() => {
-      localStorage.removeItem("token");
-    });
-}, [router]);
- const handleSubmit = async (e) => {
-  e.preventDefault();
-  setMessage('');
-  setError('');
-  if (!isLogin && !isStrongPassword(formData.password)) {
-    setError('Password must be at least 8 characters and include one uppercase letter and one special character.');
-    return;
-  }
-
-  setSubmitting(true);
-
-  try {
-    if (isLogin) {
-      const data = await authService.login({
-        email: formData.email,
-        password: formData.password,
+    authService
+      .validateToken()
+      .then(() => {
+        router.push("/dashboard");
+      })
+      .catch(() => {
+        localStorage.removeItem("token");
       });
-      localStorage.setItem('token', data.token);
-      window.location.href = '/dashboard';
+  }, [router]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setMessage('');
+    setError('');
+    
+    if (!isLogin && !isStrongPassword(formData.password)) {
+      setError('Password must be at least 8 characters and include one uppercase letter and one special character.');
       return;
     }
 
-    const data = await authService.register(formData);
-    setMessage(data.message || 'Account created. Check your email to verify your account.');
-    setIsLogin(true);
+    setSubmitting(true);
 
-  } catch (error) {
-    console.error('Auth Error:', error);
-    setError(error.message || 'Could not connect to server.');
-  } finally {
-    setSubmitting(false);
-  }
-};
+    try {
+      if (isLogin) {
+        const data = await authService.login({
+          email: formData.email,
+          password: formData.password,
+        });
+        localStorage.setItem('token', data.token);
+        window.location.href = '/dashboard';
+        return;
+      }
+
+      const data = await authService.register(formData);
+      setMessage(data.message || 'Account created. Check your email to verify your account.');
+      // NOTE: We do NOT set isLogin(true) here anymore, so they can see the resend button
+      
+    } catch (error) {
+      console.error('Auth Error:', error);
+      setError(error.message || 'Could not connect to server.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleResend = async () => {
+    setSubmitting(true);
+    setError('');
+    setMessage('');
+    try {
+      const data = await authService.resendEmail(formData.email);
+      setMessage(data.message || 'Verification email re-sent successfully!');
+    } catch (err) {
+      setError(err.message || 'Failed to resend email. Please try again.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 dark:bg-[#0B0E19] p-4 font-sans antialiased text-gray-900 dark:text-gray-100 transition-colors duration-300">
@@ -87,6 +102,21 @@ useEffect(() => {
         {message && (
           <div className="mb-4 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700 dark:border-emerald-900/60 dark:bg-emerald-950/30 dark:text-emerald-300">
             {message}
+          </div>
+        )}
+
+        {/* NEW: Resend Email Block */}
+        {message && !isLogin && (
+          <div className="mb-6 text-center">
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">Didn't receive the email?</p>
+            <button
+              type="button"
+              onClick={handleResend}
+              disabled={submitting}
+              className="text-sm font-bold text-blue-600 dark:text-blue-400 hover:underline disabled:opacity-50"
+            >
+              Click here to resend it
+            </button>
           </div>
         )}
 
@@ -147,7 +177,11 @@ useEffect(() => {
 
         <p className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
           {isLogin ? "Don't have an account?" : "Already have an account?"}
-          <button type="button" onClick={() => setIsLogin(!isLogin)} className="ml-1.5 text-blue-600 dark:text-blue-400 font-bold hover:underline transition-all">
+          <button type="button" onClick={() => {
+            setIsLogin(!isLogin);
+            setMessage('');
+            setError('');
+          }} className="ml-1.5 text-blue-600 dark:text-blue-400 font-bold hover:underline transition-all">
             {isLogin ? 'Register here' : 'Login here'}
           </button>
         </p>

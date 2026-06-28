@@ -60,6 +60,15 @@ export const authService = {
     return parseResponse(res);
   },
 
+  resendEmail: async (email) => {
+    const res = await fetch(`${BASE_URL}/api/v1/auth/resend-verification`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(email),
+    });
+    return parseResponse(res);
+  },
+
   forgotPassword: async (email) => {
     const res = await fetch(`${BASE_URL}/api/v1/auth/forgot-password`, {
       method: 'POST',
@@ -127,9 +136,6 @@ export const userService = {
 };
 
 export const notionService = {
-  /**
-   * ADDED: Fetches the backend-generated link containing dynamic user state identifiers.
-   */
   getConnectUrl: async () => {
     const token = getSafeToken();
     const res = await fetch(`${BASE_URL}/api/v1/oauth/authorize-url`, {
@@ -139,7 +145,7 @@ export const notionService = {
         'Content-Type': 'application/json'
       },
     });
-    return parseResponse(res); // Returns { url: "https://api.notion.com/..." }
+    return parseResponse(res);
   },
 
   getDatabases: async () => {
