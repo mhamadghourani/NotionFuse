@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Database, GitMerge, Zap, CreditCard, ChevronDown } from 'lucide-react';
+import { Database, GitMerge, Zap, CreditCard, Star } from 'lucide-react';
 import { userService, notionService } from '@/services/NotionService';
 
 export default function DashboardPage() {
@@ -15,7 +15,6 @@ export default function DashboardPage() {
   useEffect(() => {
     async function fetchData() {
       try {
-        // Fetch all dashboard data in parallel for speed
         const [user, pipelines, history] = await Promise.all([
           userService.getMe().catch(() => null),
           notionService.getActivePipelines().catch(() => []),
@@ -39,6 +38,10 @@ export default function DashboardPage() {
     );
   }
 
+  const formattedName = data.user?.name 
+    ? data.user.name.charAt(0).toUpperCase() + data.user.name.slice(1) 
+    : 'Developer';
+
   return (
     <main className="min-h-screen bg-gray-50 dark:bg-[#0B0E19] p-6 md:p-12 font-sans text-gray-900 dark:text-gray-100 transition-colors">
       <div className="max-w-7xl mx-auto space-y-8">
@@ -46,9 +49,20 @@ export default function DashboardPage() {
         {/* Header Section */}
         <header className="flex flex-col md:flex-row md:justify-between md:items-end gap-4">
           <div>
-            <h1 className="text-4xl font-extrabold tracking-tighter">Hello, {data.user?.name ? data.user.name.charAt(0).toUpperCase() + data.user.name.slice(1) : 'Developer'} 👋</h1>
+            <div className="flex flex-wrap items-center gap-3">
+              <h1 className="text-4xl font-extrabold tracking-tighter">Hello, {formattedName} 👋</h1>
+              
+              {/* Special Badge */}
+              {data.user?.tier === 'SPECIAL' && (
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-amber-500 to-yellow-400 text-white shadow-lg shadow-amber-500/20">
+                  <Star className="w-3 h-3 fill-current" />
+                  Special Member
+                </span>
+              )}
+            </div>
             <p className="text-gray-500 dark:text-gray-400 mt-1">Your command center for real-time data orchestration.</p>
           </div>
+
           <div className="bg-white dark:bg-[#15192D] px-8 py-4 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm flex items-center gap-4">
             <div>
               <p className="text-[10px] font-bold uppercase text-gray-400 tracking-widest">Plan</p>
@@ -63,7 +77,13 @@ export default function DashboardPage() {
           <StatCard label="Active Pipelines" value={data.pipelines.length.toString()} icon={<Database />} color="emerald" />
           <StatCard label="Total Merges" value={data.history.length.toString()} icon={<GitMerge />} color="blue" />
           <StatCard label="Credits" value="∞" icon={<Zap />} color="amber" />
-          <StatCard label="Tier" value={data.user?.plan || 'N/A'} icon={<CreditCard />} color="purple" />
+          {/* Dynamic Tier Display */}
+          <StatCard 
+            label="Tier" 
+            value={data.user?.tier === 'SPECIAL' ? 'VIP' : (data.user?.plan || 'N/A')} 
+            icon={<CreditCard />} 
+            color="purple" 
+          />
         </section>
 
         {/* Data Table */}
@@ -103,13 +123,6 @@ function StatCard({ label, value, icon, color }) {
     purple: 'bg-purple-500/10 text-purple-400 border-purple-500/20'
   };
 
-  const glowColors = {
-    emerald: 'bg-emerald-500',
-    blue: 'bg-blue-500',
-    amber: 'bg-amber-500',
-    purple: 'bg-purple-500'
-  };
-
   return (
     <div className="relative overflow-hidden bg-white dark:bg-[#15192D] p-6 rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm transition-all hover:scale-[1.02]">
       <div className="flex items-start justify-between relative z-10">
@@ -121,7 +134,6 @@ function StatCard({ label, value, icon, color }) {
           {icon}
         </div>
       </div>
-      <div className={`absolute -bottom-6 -right-6 w-24 h-24 rounded-full blur-3xl opacity-20 ${glowColors[color]}`} />
     </div>
   );
 }
